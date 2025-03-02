@@ -72,7 +72,6 @@ class eyebrow_rig(object):
         jnt_num = len(self.TarJNTs)
 
         # creating joints
-
         tra_jnt = cmds.duplicate(self.TarJNTs[0], name='tra', rc=1)
         for index, jnt in enumerate(tra_jnt):
             cmds.rename(jnt, 'eyebrow_tra_{0}_JNT'.format(index))
@@ -173,12 +172,11 @@ class eyebrow_rig(object):
 
         # setting up strech
         crv = 'eyebrow_CRV'
-        # cmds.setAttr('{0}.inheritsTransform'.format(crv), 0)
 
         # setting up Locator
         cmds.spaceLocator(n='eyebrow_settings_LOC')
         settings_shape = 'eyebrow_settings_LOCShape'
-        cmds.addAttr(settings_shape, at='double', ln='Stretch', min=0, max=1, dv=0, k=True)
+        cmds.addAttr(settings_shape, at='double', ln='stretch', min=0, max=1, dv=0, k=True)
 
         # parenting LOC to ctrls and hide
         ctrls = cmds.ls('eyebrow_*_CTRL')
@@ -190,7 +188,6 @@ class eyebrow_rig(object):
         # create ALD and set the uParamValue to eyebrow_CRVShape max value
         ald = cmds.createNode('arcLengthDimension', n='eyebrow_ALDShape')
         cmds.connectAttr('{0}.worldSpace[0]'.format(crv), '{0}.nurbsGeometry'.format(ald))
-        cmds.rename('arcLengthDimension1', 'eyebrow_ALD')
 
         max_value = cmds.getAttr('eyebrow_CRVShape.mmv.max')
         cmds.setAttr('{0}.uParamValue'.format(ald), max_value)
@@ -220,6 +217,7 @@ class eyebrow_rig(object):
             cmds.connectAttr('{0}.outputR'.format(eyebrow_stretch_BLC), '{0}.tx'.format(jnt))
 
             cmds.connectAttr('{0}.stretch'.format(settings_shape), '{0}.blender'.format(eyebrow_stretch_BLC))
+
 
 
 
