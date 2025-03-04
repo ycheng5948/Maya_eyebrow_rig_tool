@@ -217,7 +217,14 @@ class eyebrow_rig(object):
             cmds.connectAttr('{0}.outputR'.format(eyebrow_stretch_BLC), '{0}.tx'.format(jnt))
 
             cmds.connectAttr('{0}.stretch'.format(settings_shape), '{0}.blender'.format(eyebrow_stretch_BLC))
-
+        
+        # hide locked and unused attributes of the locator shape
+        cmds.setAttr('eyebrow_settings_LOCShape.lpx', channelBox=0, keyable=0)
+        cmds.setAttr('eyebrow_settings_LOCShape.lpy', channelBox=0, keyable=0)
+        cmds.setAttr('eyebrow_settings_LOCShape.lpz', channelBox=0, keyable=0)
+        cmds.setAttr('eyebrow_settings_LOCShape.lsx', channelBox=0, keyable=0)
+        cmds.setAttr('eyebrow_settings_LOCShape.lsy', channelBox=0, keyable=0)
+        cmds.setAttr('eyebrow_settings_LOCShape.lsz', channelBox=0, keyable=0)
 
 
 
