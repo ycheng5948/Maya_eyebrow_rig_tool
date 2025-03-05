@@ -152,8 +152,8 @@ class eyebrow_rig(object):
         cmds.delete('ball_GRP')
 
         # setting up ctrls' constraints
-        cmds.parentConstraint('eyebrow_0_CTRL', 'eyebrow_2_CTRL', 'eyebrow_1_CTRGRP', mo=1)
-        cmds.parentConstraint('eyebrow_2_CTRL', 'eyebrow_4_CTRL', 'eyebrow_3_CTRGRP', mo=1)
+        cmds.parentConstraint('eyebrow_0_CTRL', 'eyebrow_2_CTRL', 'eyebrow_1_CTRL_GRP', mo=1)
+        cmds.parentConstraint('eyebrow_2_CTRL', 'eyebrow_4_CTRL', 'eyebrow_3_CTRL_GRP', mo=1)
 
         # setting eyeborw_HND world up objects' attributes
         cmds.connectAttr('eyebrow_0_CTRL.worldMatrix[0]', 'eyeborw_HND.dWorldUpMatrix')
