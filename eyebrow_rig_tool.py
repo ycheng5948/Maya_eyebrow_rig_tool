@@ -143,7 +143,7 @@ class eyebrow_rig(object):
         cmds.group(em=True, name='eyebrow_spl_GRP')
         cmds.parent(joints, 'eyebrow_spl_GRP')
         for jnt in joints:
-            grp = cmds.duplicate('ball_GRP', name='eyebrow_{0}_CTRGRP'.format(jnt.split('_')[2]), rc=1)[0]
+            grp = cmds.duplicate('ball_GRP', name='eyebrow_{0}_CTRL_GRP'.format(jnt.split('_')[2]), rc=1)[0]
             ctrl = cmds.listRelatives(grp, c=True)[0]
             ctrl = cmds.rename(ctrl, 'eyebrow_{0}_CTRL'.format(jnt.split('_')[2]))
             cmds.delete(cmds.parentConstraint(jnt, grp, mo=False))
