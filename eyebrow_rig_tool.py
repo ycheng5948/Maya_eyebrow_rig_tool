@@ -226,6 +226,33 @@ class eyebrow_rig(object):
         cmds.setAttr('eyebrow_settings_LOCShape.lsy', channelBox=0, keyable=0)
         cmds.setAttr('eyebrow_settings_LOCShape.lsz', channelBox=0, keyable=0)
 
+        # eyebrow_twk in-out constraint control
+        twk_CTRLs = ['eyebrow_1_CTRL', 'eyebrow_3_CTRL']
+
+        for i in twk_CTRLs:
+            cmds.select(i)
+            cmds.addAttr(at='float', ln='in_out', k=True, minValue=-1, maxValue=1)
+            # create MDN, set to multiply(1) and connect
+            eyebrow_twk_MDN = cmds.createNode('multiplyDivide', n='{0}_MDN'.format(i))
+            cmds.setAttr('{0}.input2X'.format(eyebrow_twk_MDN), 0.5)
+            cmds.setAttr('{0}.input2Y'.format(eyebrow_twk_MDN), -0.5)
+
+            cmds.connectAttr('{0}.in_out'.format(i), '{0}.input1X'.format(eyebrow_twk_MDN))
+            cmds.connectAttr('{0}.in_out'.format(i), '{0}.input1Y'.format(eyebrow_twk_MDN))
+
+            # create PMA, set to sum(default) and connect
+            eyebrow_twk_PMA = cmds.createNode('plusMinusAverage', n='{0}'.format(i.replace('_CTRL', '_PMA')))
+            cmds.setAttr('{0}.input2D[1].input2Dx'.format(eyebrow_twk_PMA), 1)
+            cmds.setAttr('{0}.input2D[1].input2Dy'.format(eyebrow_twk_PMA), 1)
+
+            cmds.connectAttr('{0}.outputX'.format(eyebrow_twk_MDN), '{0}.input2D[0].input2Dx'.format(eyebrow_twk_PMA))
+            cmds.connectAttr('{0}.outputY'.format(eyebrow_twk_MDN), '{0}.input2D[0].input2Dy'.format(eyebrow_twk_PMA))
+
+        cmds.connectAttr('{0}.output2D.output2Dy'.format('eyebrow_1_CTRL_PMA'), '{0}.eyebrow_0_CTRLW0'.format(self.in_constraints))
+        cmds.connectAttr('{0}.output2D.output2Dx'.format('eyebrow_1_CTRL_PMA'), '{0}.eyebrow_2_CTRLW1'.format(self.in_constraints))
+
+        cmds.connectAttr('{0}.output2D.output2Dy'.format('eyebrow_3_CTRL_PMA'), '{0}.eyebrow_2_CTRLW0'.format(self.out_constraints))
+        cmds.connectAttr('{0}.output2D.output2Dx'.format('eyebrow_3_CTRL_PMA'), '{0}.eyebrow_4_CTRLW1'.format(self.out_constraints))
 
 
 #IN Maya
